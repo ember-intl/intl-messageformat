@@ -94,6 +94,13 @@ Compiler.prototype.compileArgument = function (element) {
                 format: new Intl.NumberFormat(locales, options).format
             };
 
+        case 'shortNumberFormat':
+            options = formats.number[format.style];
+            return {
+                id    : element.id,
+                format: new ShortNumberFormat(locales, options).format
+            };
+
         case 'dateFormat':
             options = formats.date[format.style];
             return {
@@ -204,3 +211,42 @@ SelectFormat.prototype.getOption = function (value) {
     var options = this.options;
     return options[value] || options.other;
 };
+
+// do something with __localeData__
+function ShortNumberFormat(locales, options) {
+    this.__locales__    = locales;
+    this.__options__    = options;
+    this.__localeData__ = IntlMessageFormat.__localeData__;
+}
+
+// var localeData = IntlMessageFormat.__localeData__[locale]['numbers']['decimalFormats-numberSystem-latn']['short'];
+ShortNumberFormat.prototype.format = function (value) {
+  // take array of locales and reduce to find matching locale.  Then get the rule based on range number is in, number of zeros
+  // perhaps convert number to decimal and format (e.g. 1.234 && "0K")
+  var rules = this.__locales__.reduce(function (locale) {
+    return this.__localeData__[locale] ? this.__localeData__[locale]['numbers']['decimal']['short'];
+  });
+
+  if (rules.length === 0) {
+    return value;
+  }
+
+  // just now assuming first locale matches.  TODO: loop through and find first match
+  // matchingRules = [
+  //   [1000, {one: ["0K", 1], other: ["0K", 1]}],
+  //   [10000, %{one: ["00K", 2], other: ["00K", 2]}]
+  // ]
+  var matchingRules = rules[0];
+
+  // 1. Take value and determine range it is in - e.g. 1000 for 1765
+  // e.g. formatter = "0K";
+  // 2. Extract specific rule from hash - ["0K", 1] meaning which value from the rule and number of zeros
+  // 3.
+}
+
+function comparison(value, boundary) {
+  if (value <= boundary) {
+    return true;
+  }
+  return false;
+}
