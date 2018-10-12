@@ -436,12 +436,28 @@ describe('ShortNumberFormat', function () {
           expect(m).to.equal('I have 1K');
       });
 
+      it('should format -1000', function () {
+          var m = msgFmt.format({
+              numPeople: -1000
+          });
+
+          expect(m).to.equal('I have -1K');
+      });
+
       it('should format 1501', function () {
           var m = msgFmt.format({
               numPeople: 1501
           });
 
           expect(m).to.equal('I have 2K');
+      });
+
+      it('should format -1501', function () {
+          var m = msgFmt.format({
+              numPeople: -1501
+          });
+
+          expect(m).to.equal('I have -2K');
       });
   });
 });
