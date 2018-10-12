@@ -212,7 +212,6 @@ SelectFormat.prototype.getOption = function (value) {
     return options[value] || options.other;
 };
 
-// do something with __localeData__
 function ShortNumberFormat(locales, options) {
     this.__locales__    = locales;
     this.__options__    = options;
@@ -280,5 +279,5 @@ function normalizeNumber(number, range, numberOfDigits) {
 
 function formatNumber(number, format) {
   // 1.734 -> 1K
-  return format.replace(/0*(\w+)/, `${number}$1`);
+  return format.replace(/0*(\w+)/, number + '$1');
 }
