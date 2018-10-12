@@ -248,7 +248,21 @@ ShortNumberFormat.prototype.format = function (value) {
   }).reverse()[0];
 
   // 3. Normalise number by converting to decimal and cropping to number of digits
+  // 22 -> 22
+  // 1000 -> 1.000 -> 1K
+  // 1600 -> 1.600 -> 2K
+  // 1600.9 -> 1.600 -> 2K
+  // 1,000,543 -> 1.000.543 -> 1M
   // 4. Format according to formatter e.g. "0K"
+  if (number < 1000) {
+    return value;
+  } else {
+    var range = matchingRule[0];
+    var format = matchingRule[1].one[0];
+    var numberOfDigits = matchingRule[1].one[1];
+    var normalized = normalizeNumber(number, range, numberOfDigits);
+    return formatNumber(normalized, format);
+  }
 };
 
 function isLessThanBoundary(value, boundary) {
@@ -256,4 +270,15 @@ function isLessThanBoundary(value, boundary) {
     return true;
   }
   return false;
+}
+
+function normalizeNumber(number, range, numberOfDigits) {
+  // 1734 -> 1.734
+  // 17345 -> 17.345
+  return number / (range / Math.pow(10, numberOfDigits - 1));
+}
+
+function formatNumber(number, format) {
+  // 1.734 -> 1K
+  return format.replace(/0*(\w+)/, `${number}$1`);
 }

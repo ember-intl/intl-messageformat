@@ -405,15 +405,12 @@ describe('IntlMessageFormat', function () {
 });
 
 describe('ShortNumberFormat', function () {
-  it('should be a function', function () {
-      expect(ShortNumberFormat).to.be.a('function');
-  });
 
   describe('and short number formatting', function () {
       var msg = '' +
           'I have {numPeople, shortNumber}';
 
-      var msgFmt = new ShortNumberFormat(msg, 'en-US');
+      var msgFmt = new IntlMessageFormat(msg, 'en-US');
 
       it('should not format 0', function () {
           var m = msgFmt.format({
