@@ -218,10 +218,13 @@ function ShortNumberFormat(locales, options) {
     this.__localeData__ = IntlMessageFormat.__localeData__;
 }
 
-// var localeData = IntlMessageFormat.__localeData__[locale]['numbers']['decimalFormats-numberSystem-latn']['short'];
 ShortNumberFormat.prototype.format = function (value) {
   // coerce to number
   var number = Number(value);
+
+  if (number < 1000) {
+    return value;
+  }
 
   // take array of locales and reduce to find matching locale.  Then get the rule based on range number is in, number of zeros
   // perhaps convert number to decimal and format (e.g. 1.234 && "0K")
@@ -253,15 +256,12 @@ ShortNumberFormat.prototype.format = function (value) {
   // 1600.9 -> 1.600 -> 2K
   // 1,000,543 -> 1.000.543 -> 1M
   // 4. Format according to formatter e.g. "0K"
-  if (number < 1000) {
-    return value;
-  } else {
-    var range = matchingRule[0];
-    var format = matchingRule[1].one[0];
-    var numberOfDigits = matchingRule[1].one[1];
-    var normalized = normalizeNumber(number, range, numberOfDigits);
-    return formatNumber(normalized, format);
-  }
+  var range = matchingRule[0];
+  var opts = matchingRule[1];
+  var format = opts.one[0];
+  var numberOfDigits = opts.one[1];
+  var normalized = normalizeNumber(number, range, numberOfDigits);
+  return formatNumber(normalized, format);
 };
 
 function isLessThanBoundary(value, boundary) {
