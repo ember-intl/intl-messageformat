@@ -5,7 +5,7 @@
  */
 
 /*jshint node:true */
-/*global describe,it,beforeEach,afterEach,expect,IntlMessageFormat */
+/*global describe,it,beforeEach,afterEach,expect,IntlMessageFormat,ShortNumberFormat */
 'use strict';
 
 describe('IntlMessageFormat', function () {
@@ -308,46 +308,6 @@ describe('IntlMessageFormat', function () {
         });
     });
 
-    describe('and short number formatting', function () {
-        var msg = '' +
-            'I have {numPeople, shortNumber}';
-
-        var msgFmt = new IntlMessageFormat(msg, 'en-US');
-
-        it('should not format 0', function () {
-            var m = msgFmt.format({
-                numPeople: 0
-            });
-
-            expect(m).to.equal('I have 0');
-        });
-
-        it('should not format < 1000', function () {
-            var m = msgFmt.format({
-                numPeople: 999
-            });
-
-            expect(m).to.equal('I have 999');
-        });
-
-        it('should format 1000', function () {
-            var m = msgFmt.format({
-                numPeople: 1000
-            });
-
-            expect(m).to.equal('I have 1K');
-        });
-
-        it('should format 1501', function () {
-            var m = msgFmt.format({
-                numPeople: 1501
-            });
-
-            expect(m).to.equal('I have 2K');
-        });
-    });
-
-
     describe('arguments with', function () {
 
         describe('no spaces', function() {
@@ -443,3 +403,50 @@ describe('IntlMessageFormat', function () {
         });
     });
 });
+
+describe('ShortNumberFormat', function () {
+  it('should be a function', function () {
+      expect(ShortNumberFormat).to.be.a('function');
+  });
+
+  describe('and short number formatting', function () {
+      var msg = '' +
+          'I have {numPeople, shortNumber}';
+
+      var msgFmt = new ShortNumberFormat(msg, 'en-US');
+
+      it('should not format 0', function () {
+          var m = msgFmt.format({
+              numPeople: 0
+          });
+
+          expect(m).to.equal('I have 0');
+      });
+
+      it('should not format < 1000', function () {
+          var m = msgFmt.format({
+              numPeople: 999
+          });
+
+          expect(m).to.equal('I have 999');
+      });
+
+      it('should format 1000', function () {
+          var m = msgFmt.format({
+              numPeople: 1000
+          });
+
+          expect(m).to.equal('I have 1K');
+      });
+
+      it('should format 1501', function () {
+          var m = msgFmt.format({
+              numPeople: 1501
+          });
+
+          expect(m).to.equal('I have 2K');
+      });
+  });
+});
+
+

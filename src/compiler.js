@@ -221,10 +221,13 @@ function ShortNumberFormat(locales, options) {
 
 // var localeData = IntlMessageFormat.__localeData__[locale]['numbers']['decimalFormats-numberSystem-latn']['short'];
 ShortNumberFormat.prototype.format = function (value) {
+  // coerce to number
+  var number = Number(value);
+
   // take array of locales and reduce to find matching locale.  Then get the rule based on range number is in, number of zeros
   // perhaps convert number to decimal and format (e.g. 1.234 && "0K")
   var rules = this.__locales__.reduce(function (locale) {
-    return this.__localeData__[locale] ? this.__localeData__[locale]['numbers']['decimal']['short'];
+    return this.__localeData__[locale] ? this.__localeData__[locale].numbers.decimal.short : null;
   });
 
   if (rules.length === 0) {
@@ -239,12 +242,16 @@ ShortNumberFormat.prototype.format = function (value) {
   var matchingRules = rules[0];
 
   // 1. Take value and determine range it is in - e.g. 1000 for 1765
-  // e.g. formatter = "0K";
   // 2. Extract specific rule from hash - ["0K", 1] meaning which value from the rule and number of zeros
-  // 3.
-}
+  var matchingRule = matchingRules.filter(function (rule) {
+    return isLessThanBoundary(value, boundary);
+  }).reverse()[0];
 
-function comparison(value, boundary) {
+  // 3. Normalise number by converting to decimal and cropping to number of digits
+  // 4. Format according to formatter e.g. "0K"
+};
+
+function isLessThanBoundary(value, boundary) {
   if (value <= boundary) {
     return true;
   }
