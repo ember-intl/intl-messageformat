@@ -5,7 +5,7 @@
  */
 
 /*jshint node:true */
-/*global describe,it,beforeEach,afterEach,expect,IntlMessageFormat,ShortNumberFormat */
+/*global describe,it,beforeEach,afterEach,expect,IntlMessageFormat */
 'use strict';
 
 describe('IntlMessageFormat', function () {

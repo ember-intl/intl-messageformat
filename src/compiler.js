@@ -243,7 +243,7 @@ ShortNumberFormat.prototype.format = function (value) {
   // 1. Take value and determine range it is in - e.g. 1000 for 1765
   // 2. Extract specific rule from hash - ["0K", 1] meaning which value from the rule and number of zeros
   var matchingRule = matchingRules.filter(function (rule) {
-    return isLessThanBoundary(value, boundary);
+    return isLessThanBoundary(value, rule[0]);
   }).reverse()[0];
 
   // 3. Normalise number by converting to decimal and cropping to number of digits
