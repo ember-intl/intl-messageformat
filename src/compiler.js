@@ -6,6 +6,8 @@ See the accompanying LICENSE file for terms.
 
 /* jslint esnext: true */
 
+import cldrCompactNumber from 'cldr-compact-number';
+
 export default Compiler;
 
 function Compiler(locales, formats, pluralFn) {
@@ -218,66 +220,6 @@ function ShortNumberFormat(locales, options) {
     this.__localeData__ = IntlMessageFormat.__localeData__;
 }
 
-ShortNumberFormat.prototype.format = function (value) {
-  // coerce to number
-  var number = Number(value);
-
-  if (number < 1000) {
-    return value;
-  }
-
-  // take array of locales and reduce to find matching locale.  Then get the rule based on range number is in, number of zeros
-  // perhaps convert number to decimal and format (e.g. 1.234 && "0K")
-  var rules = this.__locales__.reduce(function (locale) {
-    return this.__localeData__[locale] ? this.__localeData__[locale].numbers.decimal.short : null;
-  });
-
-  if (rules.length === 0) {
-    return value;
-  }
-
-  // just now assuming first locale matches.  TODO: loop through and find first match
-  // matchingRules = [
-  //   [1000, {one: ["0K", 1], other: ["0K", 1]}],
-  //   [10000, %{one: ["00K", 2], other: ["00K", 2]}]
-  // ]
-  var matchingRules = rules[0];
-
-  // 1. Take value and determine range it is in - e.g. 1000 for 1765
-  // 2. Extract specific rule from hash - ["0K", 1] meaning which value from the rule and number of zeros
-  var matchingRule = matchingRules.filter(function (rule) {
-    return isLessThanBoundary(value, rule[0]);
-  }).reverse()[0];
-
-  // 3. Normalise number by converting to decimal and cropping to number of digits
-  // 22 -> 22
-  // 1000 -> 1.000 -> 1K
-  // 1600 -> 1.600 -> 2K
-  // 1600.9 -> 1.600 -> 2K
-  // 1,000,543 -> 1.000.543 -> 1M
-  // 4. Format according to formatter e.g. "0K"
-  var range = matchingRule[0];
-  var opts = matchingRule[1];
-  var format = opts.one[0];
-  var numberOfDigits = opts.one[1];
-  var normalized = normalizeNumber(number, range, numberOfDigits);
-  return formatNumber(normalized, format);
+ShortNumberFormat.prototype.format = function (value, locale) {
+  cldrCompactNumber.format(value, this.__locales__, this.__localeData__, this.__options__);
 };
-
-function isLessThanBoundary(value, boundary) {
-  if (value <= boundary) {
-    return true;
-  }
-  return false;
-}
-
-function normalizeNumber(number, range, numberOfDigits) {
-  // 1734 -> 1.734
-  // 17345 -> 17.345
-  return number / (range / Math.pow(10, numberOfDigits - 1));
-}
-
-function formatNumber(number, format) {
-  // 1.734 -> 1K
-  return format.replace(/0*(\w+)/, number + '$1');
-}
