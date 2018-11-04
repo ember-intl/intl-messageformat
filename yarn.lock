@@ -22,7 +22,7 @@
     "@ember-intl/formatjs-extract-cldr-data" "^6.1.0"
     serialize-javascript "^1.0.0"
 
-"@ember-intl/intl-messageformat-parser@1.5.0":
+"@ember-intl/intl-messageformat-parser@~1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@ember-intl/intl-messageformat-parser/-/intl-messageformat-parser-1.5.0.tgz#21361c912b66023a538cb3a75ebbe7853c5dea3c"
   integrity sha512-RGvJPeZ+6N3kknYZdN/D/CC1ZpTYK9g6TRwJzPMxKKL3iaVy/K5MXWdMzA0iA061VdqGJwjajf0FeIoCA9VaTA==
