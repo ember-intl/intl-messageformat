@@ -33,7 +33,8 @@
     "./lib/locales.js": false
   },
   "dependencies": {
-    "@ember-intl/intl-messageformat-parser": "~1.5.0"
+    "@ember-intl/intl-messageformat-parser": "~1.5.0",
+    "cldr-compact-number": "0.0.4"
   },
   "devDependencies": {
     "@ember-intl/grunt-extract-cldr-data": "^5.0.0",
