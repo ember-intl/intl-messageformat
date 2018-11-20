@@ -6,7 +6,7 @@ See the accompanying LICENSE file for terms.
 
 /* jslint esnext: true */
 
-import cldrCompactNumber from 'cldr-compact-number';
+import compactFormat from 'cldr-compact-number';
 
 export default Compiler;
 
@@ -98,9 +98,10 @@ Compiler.prototype.compileArgument = function (element) {
 
         case 'shortNumberFormat':
             options = formats.number[format.style];
+            var shortNumberInstance = new ShortNumberFormat(locales, options);
             return {
                 id    : element.id,
-                format: new ShortNumberFormat(locales, options).format
+                format: shortNumberInstance.format.bind(shortNumberInstance)
             };
 
         case 'dateFormat':
@@ -221,5 +222,5 @@ function ShortNumberFormat(locales, options) {
 }
 
 ShortNumberFormat.prototype.format = function (value, locale) {
-  cldrCompactNumber.format(value, this.__locales__, this.__localeData__, this.__options__);
+  return compactFormat(value, this.__locales__, this.__localeData__, this.__options__);
 };
