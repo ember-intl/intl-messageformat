@@ -267,15 +267,9 @@
     var cldr$compact$number$$format_1 = cldr$compact$number$$format.compactFormat;
 
     var cldr$compact$number$$es = cldr$compact$number$$createCommonjsModule(function (module, exports) {
-    function __export(m) {
-        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-    }
     Object.defineProperty(exports, "__esModule", { value: true });
-    __export(cldr$compact$number$$format);
-    __export(cldr$compact$number$$formatUtils);
-    __export(cldr$compact$number$$mathUtils);
-    var format_1 = cldr$compact$number$$format;
-    exports.default = format_1.compactFormat;
+
+    exports.default = cldr$compact$number$$format.compactFormat;
 
     });
 
