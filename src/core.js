@@ -73,6 +73,8 @@ defineProperty(MessageFormat, 'formats', {
             }
         },
 
+        shortNumber: {},
+
         date: {
             'short': {
                 month: 'numeric',

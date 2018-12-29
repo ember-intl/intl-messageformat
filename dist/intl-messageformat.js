@@ -365,7 +365,7 @@
                 };
 
             case 'shortNumberFormat':
-                options = formats.number;
+                options = formats.shortNumber;
                 var shortNumberInstance = new $$compiler$$ShortNumberFormat(locales, options);
                 return {
                     id    : element.id,
@@ -1963,6 +1963,8 @@
                     style: 'percent'
                 }
             },
+
+            shortNumber: {},
 
             date: {
                 'short': {

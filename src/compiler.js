@@ -97,7 +97,7 @@ Compiler.prototype.compileArgument = function (element) {
             };
 
         case 'shortNumberFormat':
-            options = formats.number;
+            options = formats.shortNumber;
             var shortNumberInstance = new ShortNumberFormat(locales, options);
             return {
                 id    : element.id,

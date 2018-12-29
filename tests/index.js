@@ -474,17 +474,14 @@ describe('ShortNumberFormat', function () {
           'I have {numPeople, shortNumber}';
 
       var msgFmt = new IntlMessageFormat(msg, 'en-US', {
-        number: {
+        shortNumber: {
             significantDigits: 1
         }
       });
 
       it('should format with one decimal place', function () {
           var m = msgFmt.format({
-              numPeople: 19099,
-              number: {
-                  significantDigits: 1
-              }
+              numPeople: 19099
           });
 
           expect(m).to.equal('I have 19.1K');
@@ -496,17 +493,14 @@ describe('ShortNumberFormat', function () {
           'I have {numPeople, shortNumber}';
 
       var msgFmt = new IntlMessageFormat(msg, 'jp', {
-        number: {
+        shortNumber: {
             significantDigits: 1
         }
       });
 
       it('should format with one decimal place', function () {
           var m = msgFmt.format({
-              numPeople: 19099,
-              number: {
-                  significantDigits: 1
-              }
+              numPeople: 19099
           });
 
           expect(m).to.equal('I have 19099');
