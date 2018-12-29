@@ -436,6 +436,14 @@ describe('ShortNumberFormat', function () {
           expect(m).to.equal('I have 1K');
       });
 
+      it('should format 19000', function () {
+          var m = msgFmt.format({
+              numPeople: 19000
+          });
+
+          expect(m).to.equal('I have 19K');
+      });
+
       it('should format -1000', function () {
           var m = msgFmt.format({
               numPeople: -1000
@@ -458,6 +466,50 @@ describe('ShortNumberFormat', function () {
           });
 
           expect(m).to.equal('I have -2K');
+      });
+  });
+
+  describe('and short number formatting', function () {
+      var msg = '' +
+          'I have {numPeople, shortNumber}';
+
+      var msgFmt = new IntlMessageFormat(msg, 'en-US', {
+        number: {
+            significantDigits: 1
+        }
+      });
+
+      it('should format with one decimal place', function () {
+          var m = msgFmt.format({
+              numPeople: 19099,
+              number: {
+                  significantDigits: 1
+              }
+          });
+
+          expect(m).to.equal('I have 19.1K');
+      });
+  });
+
+  describe('and short number formatting in japanese', function () {
+      var msg = '' +
+          'I have {numPeople, shortNumber}';
+
+      var msgFmt = new IntlMessageFormat(msg, 'jp', {
+        number: {
+            significantDigits: 1
+        }
+      });
+
+      it('should format with one decimal place', function () {
+          var m = msgFmt.format({
+              numPeople: 19099,
+              number: {
+                  significantDigits: 1
+              }
+          });
+
+          expect(m).to.equal('I have 19099');
       });
   });
 });
