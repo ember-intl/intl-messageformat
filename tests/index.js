@@ -469,13 +469,15 @@ describe('ShortNumberFormat', function () {
       });
   });
 
-  describe('and short number formatting', function () {
+  describe('and short number formatting with options', function () {
       var msg = '' +
-          'I have {numPeople, shortNumber}';
+          'I have {numPeople, shortNumber, options}';
 
       var msgFmt = new IntlMessageFormat(msg, 'en-US', {
         shortNumber: {
-            significantDigits: 1
+            options: {
+                significantDigits: 1
+            }
         }
       });
 
@@ -488,22 +490,24 @@ describe('ShortNumberFormat', function () {
       });
   });
 
-  describe('and short number formatting in japanese', function () {
+  describe('and short number formatting in chinese', function () {
       var msg = '' +
-          'I have {numPeople, shortNumber}';
+          'I have {numPeople, shortNumber, options}';
 
-      var msgFmt = new IntlMessageFormat(msg, 'jp', {
+      var msgFmt = new IntlMessageFormat(msg, 'zh', {
         shortNumber: {
-            significantDigits: 1
+            options: {
+                significantDigits: 1
+            }
         }
       });
 
       it('should format with one decimal place', function () {
           var m = msgFmt.format({
-              numPeople: 19099
+              numPeople: 12199099
           });
 
-          expect(m).to.equal('I have 19099');
+          expect(m).to.equal('I have 1,219.9万');
       });
   });
 });
