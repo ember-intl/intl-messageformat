@@ -74,7 +74,6 @@ defineProperty(MessageFormat, 'formats', {
         },
 
         shortNumber: {
-            'options': {}
         },
 
         date: {

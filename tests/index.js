@@ -475,9 +475,7 @@ describe('ShortNumberFormat', function () {
 
       var msgFmt = new IntlMessageFormat(msg, 'en-US', {
         shortNumber: {
-            options: {
-                significantDigits: 1
-            }
+            significantDigits: 1
         }
       });
 
@@ -496,9 +494,7 @@ describe('ShortNumberFormat', function () {
 
       var msgFmt = new IntlMessageFormat(msg, 'zh', {
         shortNumber: {
-            options: {
-                significantDigits: 1
-            }
+            significantDigits: 1
         }
       });
 
