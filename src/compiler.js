@@ -6,7 +6,7 @@ See the accompanying LICENSE file for terms.
 
 /* jslint esnext: true */
 
-import * as CompactFormat from 'cldr-compact-number';
+import * as compactFormat from 'cldr-compact-number';
 
 export default Compiler;
 
@@ -222,5 +222,5 @@ function ShortNumberFormat(locales, options) {
 }
 
 ShortNumberFormat.prototype.format = function (value, locale) {
-  return CompactFormat(value, this.__locales__, this.__localeData__, this.__options__);
+  return compactFormat(value, this.__locales__, this.__localeData__, this.__options__);
 };
