@@ -471,11 +471,20 @@ describe('ShortNumberFormat', function () {
 
   describe('and short number formatting with options', function () {
       var msg = '' +
-          'I have {numPeople, shortNumber}';
+          'I have {numPeople, shortNumber, twoSignificantDigits}';
 
-      var msgFmt = new IntlMessageFormat(msg, 'en-US', {
-        shortNumber: {
-            significantDigits: 1
+      var msgFmt = new IntlMessageFormat(msg, 'en-US',
+        {
+            shortNumber: {
+                zeroSignificantDigits: {
+                    significantDigits: 0
+                },
+                oneSignificantDigit: {
+                    significantDigits: 1
+                },
+                twoSignificantDigits: {
+                    significantDigits: 2
+            }
         }
       });
 
@@ -490,11 +499,20 @@ describe('ShortNumberFormat', function () {
 
   describe('and short number formatting in chinese', function () {
       var msg = '' +
-          'I have {numPeople, shortNumber}';
+          'I have {numPeople, shortNumber, oneSignificantDigit}';
 
-      var msgFmt = new IntlMessageFormat(msg, 'zh', {
-        shortNumber: {
-            significantDigits: 1
+      var msgFmt = new IntlMessageFormat(msg, 'zh',
+        {
+            shortNumber: {
+                zeroSignificantDigits: {
+                    significantDigits: 0
+                },
+                oneSignificantDigit: {
+                    significantDigits: 1
+                },
+                twoSignificantDigits: {
+                    significantDigits: 2
+            }
         }
       });
 
