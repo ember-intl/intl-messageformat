@@ -1964,8 +1964,7 @@
                 }
             },
 
-            shortNumber: {
-            },
+            shortNumber: {},
 
             date: {
                 'short': {

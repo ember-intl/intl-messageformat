@@ -471,7 +471,7 @@ describe('ShortNumberFormat', function () {
 
   describe('and short number formatting with options', function () {
       var msg = '' +
-          'I have {numPeople, shortNumber, options}';
+          'I have {numPeople, shortNumber}';
 
       var msgFmt = new IntlMessageFormat(msg, 'en-US', {
         shortNumber: {
@@ -490,7 +490,7 @@ describe('ShortNumberFormat', function () {
 
   describe('and short number formatting in chinese', function () {
       var msg = '' +
-          'I have {numPeople, shortNumber, options}';
+          'I have {numPeople, shortNumber}';
 
       var msgFmt = new IntlMessageFormat(msg, 'zh', {
         shortNumber: {

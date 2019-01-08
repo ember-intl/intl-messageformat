@@ -73,8 +73,7 @@ defineProperty(MessageFormat, 'formats', {
             }
         },
 
-        shortNumber: {
-        },
+        shortNumber: {},
 
         date: {
             'short': {
