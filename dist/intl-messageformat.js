@@ -365,7 +365,7 @@
                 };
 
             case 'shortNumberFormat':
-                options = formats.shortNumber;
+                options = formats.shortNumber[format.style];
                 var shortNumberInstance = new $$compiler$$ShortNumberFormat(locales, options);
                 return {
                     id    : element.id,
