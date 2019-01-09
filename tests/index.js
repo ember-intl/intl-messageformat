@@ -474,19 +474,20 @@ describe('ShortNumberFormat', function () {
           'I have {numPeople, shortNumber, twoSignificantDigits}';
 
       var msgFmt = new IntlMessageFormat(msg, 'en-US',
-        {
-            shortNumber: {
-                zeroSignificantDigits: {
-                    significantDigits: 0
-                },
-                oneSignificantDigit: {
-                    significantDigits: 1
-                },
-                twoSignificantDigits: {
-                    significantDigits: 2
-            }
-        }
-      });
+          {
+              shortNumber: {
+                  zeroSignificantDigits: {
+                      significantDigits: 0
+                  },
+                  oneSignificantDigit: {
+                      significantDigits: 1
+                  },
+                  twoSignificantDigits: {
+                      significantDigits: 2
+                  }
+              }
+          }
+      );
 
       it('should format with one decimal place', function () {
           var m = msgFmt.format({
@@ -502,19 +503,20 @@ describe('ShortNumberFormat', function () {
           'I have {numPeople, shortNumber, oneSignificantDigit}';
 
       var msgFmt = new IntlMessageFormat(msg, 'zh',
-        {
-            shortNumber: {
-                zeroSignificantDigits: {
-                    significantDigits: 0
-                },
-                oneSignificantDigit: {
-                    significantDigits: 1
-                },
-                twoSignificantDigits: {
-                    significantDigits: 2
-            }
-        }
-      });
+          {
+              shortNumber: {
+                  zeroSignificantDigits: {
+                      significantDigits: 0
+                  },
+                  oneSignificantDigit: {
+                      significantDigits: 1
+                  },
+                  twoSignificantDigits: {
+                      significantDigits: 2
+                  }
+              }
+          }
+      );
 
       it('should format with one decimal place', function () {
           var m = msgFmt.format({
