@@ -486,7 +486,7 @@
     function $$compiler$$ShortNumberFormat(locales, options) {
         this.__locales__    = locales;
         this.__options__    = options;
-        this.__localeData__ = IntlMessageFormat.__localeData__;
+        this.__localeData__ = $$core$$default.__localeData__;
     }
 
     $$compiler$$ShortNumberFormat.prototype.format = function (value, locale) {

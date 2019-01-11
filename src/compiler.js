@@ -6,6 +6,7 @@ See the accompanying LICENSE file for terms.
 
 /* jslint esnext: true */
 
+import IntlMessageFormat from './core';
 import * as compactFormat from 'cldr-compact-number';
 
 export default Compiler;
