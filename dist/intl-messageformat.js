@@ -1,12 +1,5 @@
 (function() {
     "use strict";
-
-    var cldr$compact$number$$ = {
-        get default() {
-            return cldr$compact$number$$default;
-        }
-    };
-
     var $$utils$$hop = Object.prototype.hasOwnProperty;
 
     function $$utils$$extend(obj) {
@@ -81,6 +74,9 @@
     }
     exports.replaceNumber = replaceNumber;
     function normalizeLocale(locale) {
+        if (locale instanceof Array) {
+            return locale[0].replace(/_/, '-').toLowerCase();
+        }
         return locale.replace(/_/, '-').toLowerCase();
     }
     exports.normalizeLocale = normalizeLocale;
@@ -490,7 +486,7 @@
     }
 
     $$compiler$$ShortNumberFormat.prototype.format = function (value, locale) {
-      return cldr$compact$number$$(value, this.__locales__, this.__localeData__, this.__options__);
+      return cldr$compact$number$$default(value, this.__locales__, this.__localeData__, this.__options__);
     };
 
     var $ember$intl$intl$messageformat$parser$$default = (function() {
