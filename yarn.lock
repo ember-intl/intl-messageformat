@@ -772,10 +772,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-cldr-compact-number@~0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/cldr-compact-number/-/cldr-compact-number-0.1.2.tgz#2753cfee51c177780bb7f4f1039ba3d96c60b3e9"
-  integrity sha512-tl9bOgrbRos9dA2NdNAhotpjgh2n/WgjVyKOI0pIH6CM5pcq+4Mlo2mRtWqz2BFPMqKYioEOcpXYXQLzMMccrQ==
+cldr-compact-number@~0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/cldr-compact-number/-/cldr-compact-number-0.2.1.tgz#912bb336009ed7193609acbb1338303c86d4118b"
+  integrity sha512-lmYdUvlFDufDI4RPmU2R5+PA2MKwp4/y29OvyL6CFX14Y0K+5RWxoQ89StAeb1fYlEznG8ywyHxWU60i+rYZqg==
 
 cldr-core@^34.0.0:
   version "34.0.0"

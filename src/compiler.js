@@ -7,7 +7,7 @@ See the accompanying LICENSE file for terms.
 /* jslint esnext: true */
 
 import IntlMessageFormat from './core';
-var compactFormat = require('cldr-compact-number');
+import compactFormat from 'cldr-compact-number';
 
 export default Compiler;
 
