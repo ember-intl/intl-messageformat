@@ -421,7 +421,7 @@
     }
 
     $$compiler$$ShortNumberFormat.prototype.format = function (value, locale) {
-      return cldr$compact$number$$default(value, this.__locales__, this.__localeData__, this.__options__);
+      return cldr$compact$number$$compactFormat(value, this.__locales__, this.__localeData__, this.__options__);
     };
 
     var $ember$intl$intl$messageformat$parser$$default = (function() {
