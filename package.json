@@ -54,8 +54,8 @@
     "grunt-json-remove-fields": "git://github.com/ericf/grunt-json-remove-fields#improve-files-and-output",
     "grunt-saucelabs": "^9.0.0",
     "intl": "^1.2.5",
-    "istanbul": "^0.3.0",
-    "mocha": "^2.0.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
     "xunit-file": "0.0.6"
   },
   "scripts": {
