@@ -56,222 +56,8 @@
         return obj;
     };
 
-    function cldr$compact$number$$unwrapExports (x) {
-        return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
-    }
+    var $$compiler$$compactFormat = require('cldr-compact-number');
 
-    function cldr$compact$number$$createCommonjsModule(fn, module) {
-        return (module = { exports: {} }, fn(module, module.exports), module.exports);
-    }
-
-    var cldr$compact$number$$formatUtils = cldr$compact$number$$createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function replaceNumber(normalized, format) {
-        // 1.734 -> 1K
-        // replace 0's with absolute number while preserving space and remaining text
-        // return format.replace(/0*(\s*)(\w+)/, Math.round(number) + '$1$2');
-        return format.replace(/0*/, normalized);
-    }
-    exports.replaceNumber = replaceNumber;
-    function normalizeLocale(locale) {
-        if (locale instanceof Array) {
-            return locale[0].replace(/_/, '-').toLowerCase();
-        }
-        return locale.replace(/_/, '-').toLowerCase();
-    }
-    exports.normalizeLocale = normalizeLocale;
-    /**
-     * If rule only contains 0, it indicates no short number formatting applied
-     * e.g. "ja" 1234 -> 1234 and not 1K
-     */
-    function needsFormatting(format) {
-        return format.match(/[^0]/);
-    }
-    exports.needsFormatting = needsFormatting;
-    /**
-     * Given a format: { af: {locale: "af", numbers: {…}} af-na: {locale: "af-NA", parentLocale: "af"} }
-     * recursively find numbers hash
-     *
-     * @method findLocaleData
-     * @param localeData
-     * @param locale
-     */
-    function findLocaleData(localeData, locale) {
-        var topLevelData = localeData[locale];
-        if (!topLevelData) {
-            return;
-        }
-        var numbersHash = topLevelData.numbers;
-        var parentLocale = topLevelData.parentLocale;
-        if (!numbersHash && parentLocale) {
-            numbersHash = findLocaleData(localeData, parentLocale);
-        }
-        return numbersHash;
-    }
-    exports.findLocaleData = findLocaleData;
-    function findMatchingLocale(localeData, locale) {
-        var topLevelData = localeData[locale];
-        if (!topLevelData) {
-            return;
-        }
-        var numbersHash = topLevelData.numbers;
-        var parentLocale = topLevelData.parentLocale;
-        if (!numbersHash && parentLocale) {
-            numbersHash = findLocaleData(localeData, parentLocale);
-        }
-        return numbersHash;
-    }
-    exports.findMatchingLocale = findMatchingLocale;
-
-    });
-
-    cldr$compact$number$$unwrapExports(cldr$compact$number$$formatUtils);
-    var cldr$compact$number$$formatUtils_1 = cldr$compact$number$$formatUtils.replaceNumber;
-    var cldr$compact$number$$formatUtils_2 = cldr$compact$number$$formatUtils.normalizeLocale;
-    var cldr$compact$number$$formatUtils_3 = cldr$compact$number$$formatUtils.needsFormatting;
-    var cldr$compact$number$$formatUtils_4 = cldr$compact$number$$formatUtils.findLocaleData;
-    var cldr$compact$number$$formatUtils_5 = cldr$compact$number$$formatUtils.findMatchingLocale;
-
-    var cldr$compact$number$$mathUtils = cldr$compact$number$$createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", { value: true });
-    /**
-     * Meant to either localize a number with toLocaleString or return an Integer
-     * localization accepts 3 arguments
-     *  - significantDigits
-     *  - minimumFractionDigits
-     *  - maximumFractionDigits
-     */
-    function normalizeNumber(decimal, arbitraryPrecision, sign, locale, _a) {
-        var _b = _a.significantDigits, significantDigits = _b === void 0 ? 0 : _b, _c = _a.minimumFractionDigits, minimumFractionDigits = _c === void 0 ? 0 : _c, _d = _a.maximumFractionDigits, maximumFractionDigits = _d === void 0 ? 2 : _d;
-        if (significantDigits) {
-            return toLocaleFixed(toFixed(decimal, significantDigits), locale, {
-                maximumFractionDigits: maximumFractionDigits,
-                minimumFractionDigits: minimumFractionDigits
-            });
-        }
-        return withRounding(decimal, arbitraryPrecision) * sign;
-    }
-    exports.normalizeNumber = normalizeNumber;
-    function extractIntPart(decimal, range, numberOfDigits) {
-        // 1734 -> 1.734
-        // 17345 -> 17.345
-        // 999949 -> 999.9K with one significant digit or 999,9 mil in Spanish
-        // this gives us the "int" (LHS) part of the number with the remains on the RHS
-        return (decimal / range) * Math.pow(10, numberOfDigits - 1);
-    }
-    exports.extractIntPart = extractIntPart;
-    function toFixed(decimal, significantDigits) {
-        // solves issues with toFixed returning a string
-        // e.g. 999.94 -> 999.9
-        // e.g. 999.95 -> 1000 instead of (999.95).toFixed(1) -> '1000.1'
-        var powOf10 = Math.pow(10, significantDigits);
-        return Math.round(decimal * powOf10) / powOf10;
-    }
-    function withRounding(decimal, arbitraryPrecision) {
-        if (decimal <= 1) {
-            // We do not want to round up to nearest 10 (Math.pow(10, 1)) when < 1.
-            // Just round decimal
-            return Math.round(decimal);
-        }
-        // rounding on floating point numbers
-        // e.g. 99.5 -> 100
-        var powOf10 = Math.pow(10, arbitraryPrecision);
-        return Math.round(decimal / powOf10) * powOf10;
-    }
-    function toLocaleFixed(value, locale, digitsConfig) {
-        if (value && typeof value === 'number') {
-            return value.toLocaleString(locale, digitsConfig);
-        }
-    }
-
-    });
-
-    cldr$compact$number$$unwrapExports(cldr$compact$number$$mathUtils);
-    var cldr$compact$number$$mathUtils_1 = cldr$compact$number$$mathUtils.normalizeNumber;
-    var cldr$compact$number$$mathUtils_2 = cldr$compact$number$$mathUtils.extractIntPart;
-
-    var cldr$compact$number$$format = cldr$compact$number$$createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-
-    function compactFormat(value, locale, localeData, options) {
-        if (options === void 0) { options = {}; }
-        var num = Number(value);
-        if (!value || typeof num !== 'number') {
-            return value;
-        }
-        // figure out which numbers hash based on the locale
-        locale = cldr$compact$number$$formatUtils.normalizeLocale(locale); // en_GB -> en-GB
-        var data = cldr$compact$number$$formatUtils.findLocaleData(localeData, locale);
-        if (!data) {
-            return value;
-        }
-        // take the absolute value and stash sign to apply at end
-        var sign = 1;
-        if (num < 0) {
-            sign = -1;
-            num = Math.abs(num);
-        }
-        // find specific rules: short or long
-        var _a = options.financialFormat, financialFormat = _a === void 0 ? false : _a, _b = options.long, long = _b === void 0 ? false : _b, _c = options.significantDigits, significantDigits = _c === void 0 ? 0 : _c, _d = options.threshold, threshold = _d === void 0 ? 0.05 : _d;
-        var rules = long ? data.decimal.long : data.decimal.short;
-        if (!rules || num < 1000) {
-            return value;
-        }
-        // 1. Take number and determine range it is in
-        // 2. Extract specific rule from hash - ["0K", 1] meaning which value from the rule and number of zeros
-        var matchingRule;
-        var arbitraryPrecision = 0;
-        for (var i = 0; i <= rules.length; i++) {
-            if (num <= rules[i][0]) {
-                var testRangeHigh = rules[i][0];
-                // always use previous rule until within 5% threshold of upper limit
-                if (!financialFormat && 1 - num / testRangeHigh > threshold) {
-                    // e.g use 950K instead of 1M
-                    // e.g use 101K instead of 0.1M
-                    matchingRule = rules[i - 1];
-                }
-                else {
-                    matchingRule = rules[i];
-                    if (!significantDigits || !financialFormat) {
-                        // if we want to round up, we need to prevent numbers like 99,499 from rounding down to 99K
-                        // /-private/math-utils will use this variable to round a number like 91 to 100 since we are within the threshold
-                        arbitraryPrecision = 1;
-                    }
-                }
-                break;
-            }
-        }
-        // 3. Normalise number by converting to decimal and cropping to number of digits
-        //  1000 -> 1.000 -> 1K
-        //  1600 -> 1.600 -> 2K
-        // 4. Format according to formatter e.g. "0K"
-        var range = matchingRule[0], opts = matchingRule[1];
-        // cldr data is either `one` or `other`.  Defaulting to `one` for now
-        var _e = opts.one || opts.other, formatter = _e[0], numberOfDigits = _e[1];
-        if (!cldr$compact$number$$formatUtils.needsFormatting(formatter)) {
-            return value;
-        }
-        var normalized = cldr$compact$number$$mathUtils.normalizeNumber(cldr$compact$number$$mathUtils.extractIntPart(num, range, numberOfDigits), arbitraryPrecision, sign, locale, options);
-        return cldr$compact$number$$formatUtils.replaceNumber(normalized, formatter);
-    }
-    exports.compactFormat = compactFormat;
-
-    });
-
-    cldr$compact$number$$unwrapExports(cldr$compact$number$$format);
-    var cldr$compact$number$$format_1 = cldr$compact$number$$format.compactFormat;
-
-    var cldr$compact$number$$es = cldr$compact$number$$createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", { value: true });
-
-    exports.default = cldr$compact$number$$format.compactFormat;
-
-    });
-
-    var cldr$compact$number$$index = cldr$compact$number$$unwrapExports(cldr$compact$number$$es);
-
-    var cldr$compact$number$$default = cldr$compact$number$$index;
     var $$compiler$$default = $$compiler$$Compiler;
 
     function $$compiler$$Compiler(locales, formats, pluralFn) {
@@ -486,7 +272,7 @@
     }
 
     $$compiler$$ShortNumberFormat.prototype.format = function (value, locale) {
-      return cldr$compact$number$$default(value, this.__locales__, this.__localeData__, this.__options__);
+      return $$compiler$$compactFormat(value, this.__locales__, this.__localeData__, this.__options__);
     };
 
     var $ember$intl$intl$messageformat$parser$$default = (function() {
@@ -2165,7 +1951,7 @@
             locales.join(', ') + ', or the default locale: ' + defaultLocale
         );
     };
-    var $$en$$default = {"locale":"en","pluralRuleFunction":function(n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"},"numbers":{"decimal":{"long":[[1000,{"one":["0 thousand",1],"other":["0 thousand",1]}],[10000,{"one":["00 thousand",2],"other":["00 thousand",2]}],[100000,{"one":["000 thousand",3],"other":["000 thousand",3]}],[1000000,{"one":["0 million",1],"other":["0 million",1]}],[10000000,{"one":["00 million",2],"other":["00 million",2]}],[100000000,{"one":["000 million",3],"other":["000 million",3]}],[1000000000,{"one":["0 billion",1],"other":["0 billion",1]}],[10000000000,{"one":["00 billion",2],"other":["00 billion",2]}],[100000000000,{"one":["000 billion",3],"other":["000 billion",3]}],[1000000000000,{"one":["0 trillion",1],"other":["0 trillion",1]}],[10000000000000,{"one":["00 trillion",2],"other":["00 trillion",2]}],[100000000000000,{"one":["000 trillion",3],"other":["000 trillion",3]}]],"short":[[1000,{"one":["0K",1],"other":["0K",1]}],[10000,{"one":["00K",2],"other":["00K",2]}],[100000,{"one":["000K",3],"other":["000K",3]}],[1000000,{"one":["0M",1],"other":["0M",1]}],[10000000,{"one":["00M",2],"other":["00M",2]}],[100000000,{"one":["000M",3],"other":["000M",3]}],[1000000000,{"one":["0B",1],"other":["0B",1]}],[10000000000,{"one":["00B",2],"other":["00B",2]}],[100000000000,{"one":["000B",3],"other":["000B",3]}],[1000000000000,{"one":["0T",1],"other":["0T",1]}],[10000000000000,{"one":["00T",2],"other":["00T",2]}],[100000000000000,{"one":["000T",3],"other":["000T",3]}]]}}};
+    var $$en$$default = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"},"numbers":{"decimal":{"long":[[1000,{"one":["0 thousand",1],"other":["0 thousand",1]}],[10000,{"one":["00 thousand",2],"other":["00 thousand",2]}],[100000,{"one":["000 thousand",3],"other":["000 thousand",3]}],[1000000,{"one":["0 million",1],"other":["0 million",1]}],[10000000,{"one":["00 million",2],"other":["00 million",2]}],[100000000,{"one":["000 million",3],"other":["000 million",3]}],[1000000000,{"one":["0 billion",1],"other":["0 billion",1]}],[10000000000,{"one":["00 billion",2],"other":["00 billion",2]}],[100000000000,{"one":["000 billion",3],"other":["000 billion",3]}],[1000000000000,{"one":["0 trillion",1],"other":["0 trillion",1]}],[10000000000000,{"one":["00 trillion",2],"other":["00 trillion",2]}],[100000000000000,{"one":["000 trillion",3],"other":["000 trillion",3]}]],"short":[[1000,{"one":["0K",1],"other":["0K",1]}],[10000,{"one":["00K",2],"other":["00K",2]}],[100000,{"one":["000K",3],"other":["000K",3]}],[1000000,{"one":["0M",1],"other":["0M",1]}],[10000000,{"one":["00M",2],"other":["00M",2]}],[100000000,{"one":["000M",3],"other":["000M",3]}],[1000000000,{"one":["0B",1],"other":["0B",1]}],[10000000000,{"one":["00B",2],"other":["00B",2]}],[100000000000,{"one":["000B",3],"other":["000B",3]}],[1000000000000,{"one":["0T",1],"other":["0T",1]}],[10000000000000,{"one":["00T",2],"other":["00T",2]}],[100000000000000,{"one":["000T",3],"other":["000T",3]}]]}}};
 
     $$core$$default.__addLocaleData($$en$$default);
     $$core$$default.defaultLocale = 'en';
